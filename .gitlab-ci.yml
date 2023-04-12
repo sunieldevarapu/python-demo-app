@@ -22,7 +22,7 @@ build_image:
     variables:
         DOCKER_TLS_CERTDIR: "/certs"
     before_script:
-        - winpty docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+        - docker login -u sunieldevarapu -p 980333Ec048$
     script:
         - docker build -t $image_name:$image_tag .
         - docker push $image_name:$image_tag
