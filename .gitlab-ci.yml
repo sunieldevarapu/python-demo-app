@@ -1,29 +1,31 @@
 variables:
-    image_name: sunieldevarapu/python-demo-app
-    image_tag: app-2.0
+  IMAGE_NAME: sunieldevarapu/python-demo-app
+  IMAGE_TAG: app-1.0
 
-# stages:
-#     - test
-#     - build
+stages:
+  - test
+  - build
+  
 
-# run_tests:
-#     stage: test
-#     image: python:3.9-slim-buster
-#     before_script:
-#         - apt-get update && apt-get install make
-#     script: 
-#         - make test
+run_tests:
+  stage: test
+  image: python:3.9-slim-buster
+  before_script:
+    - apt-get update && apt-get install make
+  script:
+    - make test
+
 
 build_image:
-    #stage: build
-    image: docker@sha256:c8bb6fa5388b56304dd770c4bc0478de81ce18540173b1a589178c0d31bfce90
-    services:
-        - docker:dind@sha256:c8bb6fa5388b56304dd770c4bc0478de81ce18540173b1a589178c0d31bfce90
-    variables:
-        DOCKER_TLS_CERTDIR: "/certs"
-    before_script:
-        - echo $REGISTRY_PASS | docker login -u $REGISTRY_USER --password-stdin 
-    script:
-        - docker build -t $image_name:$image_tag .
-        - docker push $image_name:$image_tag
-        
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+  script:
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker push $IMAGE_NAME:$IMAGE_TAG
+
