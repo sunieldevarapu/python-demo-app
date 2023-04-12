@@ -26,6 +26,6 @@ build_image:
   before_script:
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
   script:
-    - docker build -t sunieldevarapu/python-demo-app:app-1.0 .
+    - docker build -t sunieldevarapu/python-demo-app .
     - docker push $IMAGE_NAME:$IMAGE_TAG
 
