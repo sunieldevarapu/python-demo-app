@@ -22,7 +22,7 @@ build_image:
     variables:
         DOCKER_TLS_CERTDIR: "/certs"
     before_script:
-        - docker login --Username $REGISTRY_USER --Password $REGISTRY_PASS
+        - docker login --username $REGISTRY_USER --password $REGISTRY_PASS
     script:
         - docker build -t $image_name:$image_tag .
         - docker push $image_name:$image_tag
